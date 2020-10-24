@@ -54,6 +54,7 @@ def gen_d12():
     return d12s[number]
 
 simplemode = False
+commentary = False
 
 def run():
     client = discord.Client()
@@ -72,6 +73,7 @@ def run():
     @client.event
     async def on_message(message):
         global simplemode
+        global commentary
         #check to prevent the bot triggering itself
         if message.author == client.user:
             return
@@ -86,6 +88,14 @@ def run():
             else:
                 simplemode = True
             await message.channel.send("Modalità semplice:"+str(simplemode))
+       
+        #This will be useful when someone will add the dice roll reactions. Ex roll 1 = You duck
+        if message.content.startswith('!dcommentary'):
+            if(commentary):
+                commentary = False
+            else:
+                commentary = True
+            await message.channel.send("Modalità semplice:"+str(commentary))
 
         #Checks the mode. If true, then it doesn't use imgs / Controlla la mode. Se vera, non userà le immagini
         if(not simplemode):
